@@ -52,7 +52,7 @@ def sys64_reg():
 
 
 def clean():
-    clean_key(user_reg())
+    #clean_key(user_reg())
     clean_key(sys_reg())
     clean_key(sys64_reg())
 

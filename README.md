@@ -8,7 +8,9 @@ require python 3
 
 specify the apps you want to delete in the app_names = ["spotify", "evernote", "VLC"]
 
-then run python RegClean.py
+the names can be case-insensitive and partial.
+
+run: python RegClean.py
 
 
 TODO
