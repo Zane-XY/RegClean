@@ -80,7 +80,7 @@ def cleanKey(subkey, subkeyName):
         if "Microsoft" not in displayName and "Windows Driver" not in displayName:
             print("found app : ", displayName)
             if detect(displayName):
-                removeFromUninstall(key, subkeyName)
+                removeFromUninstall(subkey, subkeyName)
         return False
     except FileNotFoundError:
         #print("'DisplayName' is not found in " + subkeyName)
