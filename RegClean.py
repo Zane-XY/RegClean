@@ -11,7 +11,7 @@ app_names = ["spotify", "evernote", "grepWin", "Bonjour", "bing",
 
 username = os.getenv("USERNAME")
 
-def removeFromUninstall(key_h, subkey_name):
+def remove_from_uninstall(key_h, subkey_name):
     DeleteKeyEx(key_h, subkey_name)
     print("deleted : " + subkey_name)
 
@@ -19,8 +19,8 @@ def removeFromUninstall(key_h, subkey_name):
 # takes a ken handle and  apply an operation function to all keys
 def loop_keys(key_h, op):
     r = []
-    sub_keys_num = QueryInfoKey(key_h)[0]
-    for i in range(sub_keys_num):
+    subkeys_num = QueryInfoKey(key_h)[0]
+    for i in range(subkeys_num):
         try:
             subkey_name = EnumKey(key_h,i) # used by some operations like delete
             subkey_h = OpenKey(key_h, subkey_name)
@@ -31,10 +31,10 @@ def loop_keys(key_h, op):
     return r
 
 # take a key and predicate returns a list of subkey names
-def filter_sub_key_names(key_h, pre):
+def filter_subkey_names(key_h, pre):
     r = []
-    sub_keys_num = QueryInfoKey(key_h)[0]
-    for i in range(sub_keys_num):
+    subkeys_num = QueryInfoKey(key_h)[0]
+    for i in range(subkeys_num):
         try:
             subkey_name = EnumKey(key_h,i)
             subkey_h = OpenKey(key_h, subkey_name)
@@ -51,7 +51,7 @@ def user_reg():
     HKLM_h = ConnectRegistry(None, HKEY_LOCAL_MACHINE)
     profile_key_h = OpenKeyEx(HKLM_h, r"SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList")
 
-    SID = filter_sub_key_names(profile_key_h, SID_filter)[0]
+    SID = filter_subkey_names(profile_key_h, SID_filter)[0]
     user_reg_h = ConnectRegistry(None, HKEY_USERS)
     return OpenKey(user_reg_h, SID + r"\Software\Microsoft\Windows\CurrentVersion\Uninstall")
 
@@ -90,7 +90,7 @@ def clean_key(parent_key_h, key_h, key_name):
         display_name = QueryValueEx(key_h, "DisplayName")[0]
         #print("found app : ", display_name)
         if dirty_app(display_name):
-           removeFromUninstall(parent_key_h, key_name)
+           remove_from_uninstall(parent_key_h, key_name)
     except Exception as e:
         #print(e)
         pass
